@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Environments
+.venv/
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb~
+
+# Data
+data/raw/*.csv
+data/processed/*.csv
+data/processed/*.parquet
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Models
+models/
+*.pkl
+*.joblib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Reports (generated)
+reports/figures/*.png
+reports/figures/*.pdf
+
+# Coverage
+.coverage
+htmlcov/
+.pytest_cache/

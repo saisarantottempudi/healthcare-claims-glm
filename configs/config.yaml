@@ -1,0 +1,54 @@
+project:
+  name: healthcare-claims-glm
+  version: "1.0.0"
+  description: "GLM-based health insurance claims modelling"
+
+data:
+  raw_path: data/raw/health_insurance_claims.csv
+  processed_path: data/processed/claims_processed.parquet
+  train_path: data/processed/train.parquet
+  test_path: data/processed/test.parquet
+  test_size: 0.2
+  random_state: 42
+  n_samples: 50000
+
+features:
+  numeric:
+    - age
+    - bmi
+    - num_dependants
+    - years_as_customer
+  categorical:
+    - gender
+    - region
+    - plan_type
+    - smoker
+    - chronic_conditions
+  target_frequency: claim_count
+  target_severity: claim_amount
+  exposure: exposure_years
+
+frequency_model:
+  family: Poisson
+  link: log
+  formula: "claim_count ~ age + bmi + smoker + chronic_conditions + gender + region + plan_type + num_dependants + years_as_customer"
+  alpha_ridge: 0.01
+
+severity_model:
+  family: Gamma
+  link: log
+  formula: "claim_amount ~ age + bmi + smoker + chronic_conditions + gender + region + plan_type + num_dependants + years_as_customer"
+  alpha_ridge: 0.01
+
+mlflow:
+  tracking_uri: "mlruns"
+  experiment_name: "healthcare_claims_glm"
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+  log_level: "info"
+
+reports:
+  figures_path: reports/figures

@@ -1,0 +1,30 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="healthcare-claims-glm",
+    version="1.0.0",
+    description="End-to-end GLM modelling of health insurance claim frequency and severity",
+    author="Mickey",
+    author_email="saisarant28@gmail.com",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    python_requires=">=3.10",
+    install_requires=[
+        "numpy",
+        "pandas",
+        "scipy",
+        "statsmodels",
+        "scikit-learn",
+        "patsy",
+        "matplotlib",
+        "seaborn",
+        "mlflow",
+        "fastapi",
+        "uvicorn",
+        "pydantic",
+        "joblib",
+        "python-dotenv",
+        "pyyaml",
+        "loguru",
+    ],
+)
