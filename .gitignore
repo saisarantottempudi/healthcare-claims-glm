@@ -26,8 +26,8 @@ data/processed/*.parquet
 mlruns/
 mlartifacts/
 
-# Models
-models/
+# Models (root-level artifacts only — NOT src/models/ source code)
+/models/
 *.pkl
 *.joblib
 
