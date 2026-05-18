@@ -35,18 +35,21 @@ def preprocess(df: pd.DataFrame) -> pd.DataFrame:
 
     df["bmi_excess"] = (df["bmi"] - 25).clip(lower=0)
 
-    # Pure premium (target for combined model reporting)
-    df["pure_premium"] = df["claim_amount"] / df["exposure_years"]
+    import numpy as np
 
     # Log-exposure (offset variable for Poisson GLM)
-    import numpy as np
     df["log_exposure"] = np.log(df["exposure_years"])
 
-    # Average severity per claim (used for Gamma model target)
-    df["avg_claim_amount"] = df.apply(
-        lambda r: r["claim_amount"] / r["claim_count"] if r["claim_count"] > 0 else 0.0,
-        axis=1,
-    )
+    # Claim-dependent features — only computed when targets are present
+    if "claim_amount" in df.columns and "claim_count" in df.columns:
+        df["pure_premium"] = df["claim_amount"] / df["exposure_years"]
+        df["avg_claim_amount"] = df.apply(
+            lambda r: r["claim_amount"] / r["claim_count"] if r["claim_count"] > 0 else 0.0,
+            axis=1,
+        )
+    else:
+        df["pure_premium"]      = 0.0
+        df["avg_claim_amount"]  = 0.0
 
     logger.info("Preprocessing complete — added bmi_category, age_band, bmi_excess, pure_premium")
     return df
